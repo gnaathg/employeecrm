@@ -1,0 +1,129 @@
+from django.db import models
+
+class Employee(models.Model):
+    name = models.CharField(max_length=30)
+    age = models.CharField(max_length=3)
+    address = models.TextField()
+    phone = models.CharField(max_length=12)
+    gender = models.CharField(max_length=10)  
+    salary = models.PositiveIntegerField()
+    department = models.CharField(max_length=50)  
+    qualification = models.CharField(max_length=100,null=True)
+
+from crm.models impory Employee
+
+orm queries
+
+> orm query for creating a new data
+
+    Modelname.objects.create(field1=value1,field2=value2)
+
+    Employee.objects.create(
+
+                                name = "Sabari Nath",
+                                age = 22,
+                                address = "Sree Sabari",
+                                phone = 7559962454,
+                                gender = "male",
+                                salary = 15000,
+                                department = "Development",
+                                qualification = 'BTech", 
+ 
+
+
+
+                            )
+
+
+query for fetching all records
+
+    >qs=Modelname.objects.all()
+    >qs=Employee.objects.all()
+
+
+> shell cmd:python manage.py shell
+
+query for fetchin specific record
+
+    >qs=Modelname.objects.get(id)
+    >qs=Employee.objects.get(id=1)
+
+query for  filtering employess
+
+    >qs=Modelname.objects.filter(field=value)
+    >qs=Employee.objects.filter(gender="male")
+
+field lookups
+
+    < - __lt
+    > - __gt
+    <= __lte
+    >= __gte
+
+query for excluding particular field
+
+    >qs=Modelname.objects.all().exclude(field=value)
+    >qs=Employee.objects.all().exclude(department=hr)
+
+query for updating
+
+    Modelname.objects.filter(id=value).update(filed=value)
+
+query for deleting field
+
+    Modelname.objects.get(id=value).delete()
+
+qury for sorting
+
+    Modelname.objects.all().order_by(-field) #descending
+    Modelname.objects.all().order_by(field) #ascending
+
+
+
+
+
+
+MOVIE DATABASE
+
+
+from django.db import models
+
+    class Movie(models.Model):
+
+        title=models.CharField(max_length=20)
+        genre=models.CharField(max_length=10)
+        runtime=models.CharField(max_length=6)
+        language=models.CharField(max_length=7)
+        year=models.CharField(max_length=4)
+        director=models.CharField(max_length=30)
+
+        def __str__(self):
+
+            return self.title
+
+ORM queries
+
+    Movie.objects.create(name="URI",genre="Action",runtime=2:05:37,language="hindi",year=2018,director="Aditya Dhar")
+
+queriesfor fetching all movies
+
+qs=Movie.objects.all()
+
+qs=Movie.objects.get(id=1)
+
+qs=Movie.objects.filter(language="malayalam")
+
+qs=Movie.objects.filter(runtime__gt=140,language="malayalam")
+
+qs=Movie.objects.filter(title__startswith="a")
+
+qs=Movie.objects.filter(title__contains="an")
+
+
+
+qs=Employee.objects.all().values("department") 
+
+qs=Employee.objects.all().values("department").distinct()
+
+from django.db.models import Max,Min,Sum,Avg,Count
+qs=Employee.objects.all().values("salary").aggregate(Max("salary")) 
